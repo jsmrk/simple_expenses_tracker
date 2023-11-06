@@ -2,13 +2,25 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:simple_expenses_tracker/transaction.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final List<Transaction> transactions = [
+    Transaction(
+      amount: 123,
+      id: 'id',
+      title: 'title',
+      date: DateTime.now(),
+    ),
+    Transaction(
+      amount: 234,
+      id: 'id2',
+      title: 'title2',
+      date: DateTime.now(),
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -18,30 +30,58 @@ class MyApp extends StatelessWidget {
           title: Text("Appbar"),
         ),
         body: Column(
-          children: <Widget>[
+          children: [
             Container(
               width: double.infinity,
               child: Card(
-                child: Center(
-                  child: Text(
-                    'chart',
-                    style: TextStyle(fontSize: 31),
-                  ),
+                child: Text(
+                  'chart',
+                  style: TextStyle(fontSize: 31),
                 ),
               ),
             ),
-            Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-              child: Card(
-                color: Colors.amber,
-                child: Center(
-                  child: Text(
-                    'List of transact',
-                    style: TextStyle(fontSize: 31),
+            Column(
+              children: transactions.map((trans) {
+                return Card(
+                  child: Row(
+                    children: [
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 19, vertical: 11),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color.fromARGB(255, 135, 35, 28),
+                            width: 1.5,
+                          ),
+                        ),
+                        padding: EdgeInsets.all(5),
+                        child: Text(
+                          "\$${trans.amount}",
+                          style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 135, 35, 28),
+                          ),
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            trans.title,
+                            style: TextStyle(
+                                fontSize: 17.5, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            trans.date.toString(),
+                            style: TextStyle(fontSize: 15, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ),
-              ),
+                );
+              }).toList(),
             ),
           ],
         ),
