@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:simple_expenses_tracker/transaction.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(MyApp());
 
@@ -40,6 +41,24 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
+            Card(
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Title'),
+                    ),
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Amount'),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {}, child: Text("Add Transaction"))
+                  ],
+                ),
+              ),
+            ),
             Column(
               children: transactions.map((trans) {
                 return Card(
@@ -73,7 +92,7 @@ class MyApp extends StatelessWidget {
                                 fontSize: 17.5, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            trans.date.toString(),
+                            DateFormat.yMMMEd().format(trans.date),
                             style: TextStyle(fontSize: 15, color: Colors.grey),
                           ),
                         ],
