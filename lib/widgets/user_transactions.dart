@@ -25,20 +25,25 @@ final List<Transaction> _userTransactions = [
   ),
 ];
 
-void _addUserTransaction(String title, double amount) {
-  final newTransaction = Transaction(
-    id: DateTime.now().toString(),
-    title: title,
-    amount: amount,
-    date: DateTime.now(),
-  );
-}
-
 class _UserTransactionState extends State<UserTransaction> {
+  //
+  void _addUserTransaction(String title, double amount) {
+    final newTransaction = Transaction(
+      id: DateTime.now().toString(),
+      title: title,
+      amount: amount,
+      date: DateTime.now(),
+    );
+
+    setState(() {
+      _userTransactions.add(newTransaction);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      NewTransacation(),
+      NewTransacation(_addUserTransaction),
       TransactionList(_userTransactions),
     ]);
   }

@@ -1,8 +1,26 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class NewTransacation extends StatelessWidget {
+  final Function addNewTransaction;
   final titleController = TextEditingController();
   final amountController = TextEditingController();
+
+  NewTransacation(this.addNewTransaction);
+
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+      return;
+    }
+    addNewTransaction(
+      enteredTitle,
+      enteredAmount,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +37,7 @@ class NewTransacation extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
+              keyboardType: TextInputType.number,
             ),
             ElevatedButton(onPressed: () {}, child: Text("Add Transaction"))
           ],
