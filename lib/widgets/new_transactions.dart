@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 
-class NewTransacation extends StatelessWidget {
+class NewTransaction extends StatelessWidget {
   final Function addNewTransaction;
   final titleController = TextEditingController();
   final amountController = TextEditingController();
 
-  NewTransacation(this.addNewTransaction);
+  NewTransaction(this.addNewTransaction);
 
   void submitData() {
     final enteredTitle = titleController.text;
