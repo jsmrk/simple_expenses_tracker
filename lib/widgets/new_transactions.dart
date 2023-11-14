@@ -1,13 +1,11 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 
 class NewTransaction extends StatelessWidget {
-  final Function addNewTransaction;
+  final Function addTx;
   final titleController = TextEditingController();
   final amountController = TextEditingController();
 
-  NewTransaction(this.addNewTransaction);
+  NewTransaction(this.addTx);
 
   void submitData() {
     final enteredTitle = titleController.text;
@@ -16,7 +14,8 @@ class NewTransaction extends StatelessWidget {
     if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return;
     }
-    addNewTransaction(
+
+    addTx(
       enteredTitle,
       enteredAmount,
     );
@@ -25,21 +24,31 @@ class NewTransaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 5,
       child: Container(
         padding: EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
+          children: <Widget>[
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
               controller: titleController,
+              onSubmitted: (_) => submitData(),
+              // onChanged: (val) {
+              //   titleInput = val;
+              // },
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
               keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitData(),
+              // onChanged: (val) => amountInput = val,
             ),
-            ElevatedButton(onPressed: () {}, child: Text("Add Transaction"))
+            ElevatedButton(
+              child: Text('Add Transaction'),
+              onPressed: submitData,
+            ),
           ],
         ),
       ),

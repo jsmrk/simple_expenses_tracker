@@ -1,94 +1,101 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
-import 'package:simple_expenses_tracker/widgets/new_transactions.dart';
-import 'package:simple_expenses_tracker/widgets/transaction_list.dart';
 
-import 'models/transaction.dart';
+import './widgets/transaction_list.dart';
+import './models/transaction.dart';
+import 'widgets/new_transactions.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   @override
-  State<MyApp> createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Expenses Tracker',
+      home: MyHomePage(),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
     Transaction(
-      amount: 123,
-      id: 'id',
-      title: 'title',
+      id: 't1',
+      title: 'New Shoes',
+      amount: 69.99,
       date: DateTime.now(),
     ),
     Transaction(
-      amount: 234,
-      id: 'id2',
-      title: 'title2',
+      id: 't2',
+      title: 'Weekly Groceries',
+      amount: 16.53,
       date: DateTime.now(),
     ),
   ];
 
-  void _addUserTransaction(String title, double amount) {
-    final newTransaction = Transaction(
-      id: DateTime.now().toString(),
-      title: title,
-      amount: amount,
+  void _addNewTransaction(String txTitle, double txAmount) {
+    final newTx = Transaction(
+      title: txTitle,
+      amount: txAmount,
       date: DateTime.now(),
+      id: DateTime.now().toString(),
     );
 
     setState(() {
-      _userTransactions.add(newTransaction);
+      _userTransactions.add(newTx);
     });
   }
 
-  _showAddTransaction(BuildContext ctx) {
+  void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
-        context: ctx,
-        builder: (_) {
-          return Container(
-            padding: EdgeInsets.all(5),
-            child: GestureDetector(
-              onTap: () {},
-              behavior: HitTestBehavior.opaque,
-              child: NewTransaction(_addUserTransaction),
-            ),
-          );
-        });
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: NewTransaction(_addNewTransaction),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Expenses Tracker"),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () => _showAddTransaction(context),
-              icon: Icon(Icons.add),
-            ),
-          ],
-        ),
-        body: Column(
-          children: [
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter App'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => _startAddNewTransaction(context),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
             Container(
               width: double.infinity,
               child: Card(
-                child: Text(
-                  'chart',
-                  style: TextStyle(fontSize: 31),
-                ),
+                color: Colors.blue,
+                child: Text('CHART!'),
+                elevation: 5,
               ),
             ),
             TransactionList(_userTransactions),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () => _showAddTransaction(context),
-        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _startAddNewTransaction(context),
       ),
     );
   }
