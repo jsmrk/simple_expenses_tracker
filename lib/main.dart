@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 import './widgets/transaction_list.dart';
@@ -11,6 +13,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Expenses Tracker',
+      theme: ThemeData(
+        primaryColor: Colors.purple,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+            .copyWith(secondary: Colors.amber),
+        fontFamily: 'Quicksand',
+        textTheme: TextTheme(
+          titleLarge: TextStyle(
+            fontFamily: 'OpenSans',
+            fontWeight: FontWeight.w700,
+            fontSize: 17,
+          ),
+        ),
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(
+              fontFamily: 'OpenSans',
+              fontWeight: FontWeight.w700,
+              fontSize: 21,
+              color: Colors.white),
+        ),
+      ),
       home: MyHomePage(),
     );
   }
@@ -67,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter App'),
+        title: Text('Expenses Tracker'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
@@ -83,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               width: double.infinity,
               child: Card(
-                color: Colors.blue,
+                color: Theme.of(context).primaryColor,
                 child: Text('CHART!'),
                 elevation: 5,
               ),
