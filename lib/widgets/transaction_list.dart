@@ -1,8 +1,7 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import '../../models/transaction.dart';
 import 'package:intl/intl.dart';
+
+import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
@@ -17,54 +16,58 @@ class TransactionList extends StatelessWidget {
           ? Column(
               children: <Widget>[
                 Text(
-                  "No transaction Added yet!",
-                  style: Theme.of(context).textTheme.titleLarge,
+                  'No transactions added yet!',
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 SizedBox(
-                  height: 32,
+                  height: 20,
                 ),
-                Image.asset(
-                  'lib/assets/images/waiting.png',
-                  scale: 5,
-                ),
+                Container(
+                    height: 200,
+                    child: Image.asset(
+                      'lib/assets/images/waiting.png',
+                      fit: BoxFit.cover,
+                    )),
               ],
             )
           : ListView.builder(
-              //you can change the context name
-              itemBuilder: (context, index) {
+              itemBuilder: (ctx, index) {
                 return Card(
                   child: Row(
-                    children: [
+                    children: <Widget>[
                       Container(
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 19, vertical: 11),
+                        margin: EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 15,
+                        ),
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Theme.of(context).primaryColor,
-                            width: 1.5,
+                            width: 2,
                           ),
                         ),
-                        padding: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(10),
                         child: Text(
-                          "\$${transactions[index].amount.toStringAsFixed(2)}",
+                          '\$${transactions[index].amount.toStringAsFixed(2)}',
                           style: TextStyle(
-                            fontSize: 19,
                             fontWeight: FontWeight.bold,
+                            fontSize: 20,
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: <Widget>[
                           Text(
                             transactions[index].title,
-                            style: Theme.of(context).textTheme.titleLarge,
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
                           Text(
-                            DateFormat.yMMMEd()
-                                .format(transactions[index].date),
-                            style: TextStyle(fontSize: 15, color: Colors.grey),
+                            DateFormat.yMMMd().format(transactions[index].date),
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
                           ),
                         ],
                       ),
