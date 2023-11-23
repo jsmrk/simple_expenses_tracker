@@ -1,4 +1,5 @@
 // ignore_for_file: unused_element, prefer_const_constructors, sort_child_properties_last
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -176,11 +177,13 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _startAddNewTransaction(context),
-      ),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () => _startAddNewTransaction(context),
+            ),
     );
   }
 }
-//NEXT FOLDER 5 ep 1
+//NEXT FOLDER 7 ep 1
